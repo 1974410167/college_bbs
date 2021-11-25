@@ -28,7 +28,8 @@ class ForeignKeyConstraintRegistry(object):
     def _build_constraints(self):
         if not apps.ready:
             raise RuntimeError("App registry isn't ready yet.")
-        from college_bbs.college_bbs.common.models import PROTECT
+        from college_bbs.common.models.deletion import PROTECT
+
         relations = {}
         reverse_relations = {}
         for app_conf in apps.get_app_configs():

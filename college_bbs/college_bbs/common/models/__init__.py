@@ -1,2 +1,1 @@
-from .base_models import BaseModel
-
+from .base_models import BaseModel, BaseRegisterModel

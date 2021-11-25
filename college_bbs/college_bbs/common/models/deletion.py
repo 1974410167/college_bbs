@@ -2,8 +2,6 @@ from college_bbs.common.exception import ModelProtectedError
 from college_bbs.common.models.registry import foreignkeys
 
 
-
-
 PROTECT = 1
 CASCADE = 2
 SET_NULL = 3

@@ -1,7 +1,8 @@
 from django.conf import settings
 from django.db import models
 from django.contrib.auth.hashers import make_password
-from college_bbs.common.models.base_models import BaseRegisterModel
+
+from college_bbs.common.models import BaseRegisterModel
 
 
 class UserProfile(BaseRegisterModel):
