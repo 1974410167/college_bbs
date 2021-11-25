@@ -47,3 +47,10 @@ class ApiToken(models.Model):
 
     def __str__(self):
         return self.key
+
+
+def get_token_expires(token):
+    expires_time = token.expires.isoformat()
+    if expires_time.endswith('+00:00'):
+        expires_time = expires_time[:-6] + 'Z'
+    return expires_time

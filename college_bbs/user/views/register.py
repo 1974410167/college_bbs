@@ -24,4 +24,4 @@ class UserRegister(APIView):
                                           "password": data.get("password")})
             data["user"] = user
             UserProfile.objects.create(**data)
-        return Response({"mes": "注册成功"}, status=status.HTTP_201_CREATED)
+        return Response({"meg": "注册成功"}, status=status.HTTP_201_CREATED)
