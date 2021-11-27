@@ -10,6 +10,7 @@ class Post(BaseModel):
         fields = {
             'topic_id': {"to_model": "main.Topic"},
         }
+        fields.update(BaseModel.ForeignKeyConstraint.fields)
 
     class Meta(BaseModel.Meta):
         db_table = 'post'
@@ -19,3 +20,7 @@ class Post(BaseModel):
     answer_count = models.BigIntegerField(verbose_name='回答数量', default=0)
     views_count = models.BigIntegerField(verbose_name='浏览量', default=0)
     topic_id = models.BigIntegerField(verbose_name="话题id", null=True)
+
+
+
+

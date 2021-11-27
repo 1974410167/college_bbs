@@ -13,6 +13,11 @@ class BaseModel(ModelOnDeleteMixin, models.Model):
     class Meta:
         abstract = True
 
+    class ForeignKeyConstraint:
+        fields = {
+            'create_user_id': {"to_model": "user.UserProfile"},
+        }
+
     create_time = models.DateTimeField(auto_now_add=True)
     update_time = models.DateTimeField(auto_now=True)
     create_user_id = models.BigIntegerField(verbose_name='创建人 ID', default=get_create_user_id)

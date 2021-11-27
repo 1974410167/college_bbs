@@ -24,6 +24,7 @@ class ParentComment(BaseComment, BaseModel):
         fields = {
             'post_id': {"to_model": "main.Post"},
         }
+        fields.update(BaseModel.ForeignKeyConstraint.fields)
 
     post_id = models.BigIntegerField(verbose_name='帖子id', null=True)
     comment_number = models.BigIntegerField(verbose_name="回复数", default=0)
@@ -38,8 +39,11 @@ class ChildComment(BaseComment, BaseModel):
 
     class ForeignKeyConstraint:
         fields = {
-            'comment_id': {"to_model": "main.ParentComment"},
+            'comment_id': {"to_model": "main.ChildComment"},
+            'parent_comment_id': {"to_model": "main.ParentComment"},
         }
+        fields.update(BaseModel.ForeignKeyConstraint.fields)
+
 
     parent_comment_id = models.BigIntegerField(verbose_name='评论id', null=True)
     comment_id = models.BigIntegerField(verbose_name='评论id', null=True)
