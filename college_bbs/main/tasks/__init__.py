@@ -1,0 +1,2 @@
+from .sync_views_count_to_databases import sync_posts_views_count
+from .sync_agree_count_comment import sync_comment_agree_count

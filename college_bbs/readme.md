@@ -1,0 +1,5 @@
+- pip install -r requirements.txt
+- python manage.py makemigrations
+- python manage.py migrate
+- celery -A college_bbs beat   # 发布任务
+- celery -A college_bbs worker --loglevel=info # 执行任务

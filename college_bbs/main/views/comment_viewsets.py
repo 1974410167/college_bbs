@@ -19,7 +19,6 @@ class CommentViewSet(custom_mixins.DataFetchListModelMixin,
     configs = {"post_id__topic_id": ["name"], "post_id": ["title", "topic_id"]}
     configs.update(user_configs)
 
-    # 使用action扩展资源的http方法
     @action(methods=["POST"], detail=True, url_path="agree_parent_comment")
     def agree_comment(self, request, pk):
         return super(CommentViewSet, self).agree_comment(request, pk)

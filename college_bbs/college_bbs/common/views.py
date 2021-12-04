@@ -53,7 +53,7 @@ class AgreeCommentMixin:
         res = {
             "message": "",
             "id": pk,
-            "views_count": 0,
+            "agree_count": 0,
         }
         if data.get("agree_comment"):
             if is_agree == 1:
@@ -67,6 +67,6 @@ class AgreeCommentMixin:
             CONN.setbit(redis_bit_key, user_id, 0)
             res["message"] = "已取消赞同"
 
-        views_count = CONN.bitcount(redis_bit_key)
-        res["views_count"] = views_count
+        agree_count = CONN.bitcount(redis_bit_key)
+        res["agree_count"] = agree_count
         return Response(res)

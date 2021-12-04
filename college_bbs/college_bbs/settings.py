@@ -67,6 +67,12 @@ CACHES = {
     }
 }
 
+CELERY_BROKER_URL = 'redis://127.0.0.1:6379/6'
+CELERYD_HIJACK_ROOT_LOGGER = True
+CELERY_RESULT_BACKEND = "redis://127.0.0.1:6379/7"
+CELERY_TIMEZONE = 'Asia/Shanghai'
+
+
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
