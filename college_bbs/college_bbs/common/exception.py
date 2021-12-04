@@ -1,3 +1,5 @@
+from rest_framework import status
+from rest_framework.response import Response
 from rest_framework.views import exception_handler
 from django.http import JsonResponse
 
@@ -26,7 +28,20 @@ class BaseError(Exception):
     def __repr__(self):
         return '<%s>' % self.__class__.__name__
 
+    def __call__(self, *args, **kwargs):
+        return self.get_response_data()
+
 
 class ModelProtectedError(BaseError):
     code = 20
     message = '此资源被其他资源依赖，无法删除'
+
+
+class RepeatAgreeError(BaseError):
+    code = 21
+    message = "你已赞同过此评论"
+
+
+class AgreeNotFoundError(BaseError):
+    code = 22
+    message = "你还未赞同过此评论"

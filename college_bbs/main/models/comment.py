@@ -44,6 +44,5 @@ class ChildComment(BaseComment, BaseModel):
         }
         fields.update(BaseModel.ForeignKeyConstraint.fields)
 
-
     parent_comment_id = models.BigIntegerField(verbose_name='评论id', null=True)
     comment_id = models.BigIntegerField(verbose_name='评论id', null=True)
