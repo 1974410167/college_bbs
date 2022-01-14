@@ -1,3 +1,4 @@
+from rest_framework.decorators import action
 from rest_framework.response import Response
 from rest_framework.viewsets import GenericViewSet
 from college_bbs.common.data_fetch import user_configs, DataFetch
@@ -10,6 +11,8 @@ from main.serializers.post import PostSerializers
 
 class PostViewSet(custom_mixins.DataFetchListModelMixin,
                   custom_mixins.DataFetchRetrieveModelMixin,
+                  custom_mixins.AgreePostMixin,
+                  custom_mixins.BadPostMixin,
                   GenericViewSet):
 
     queryset = Post.objects.all().order_by("-create_time")
@@ -17,6 +20,8 @@ class PostViewSet(custom_mixins.DataFetchListModelMixin,
     serializer_class = PostSerializers
     configs = {"topic_id": ["name"]}
     configs.update(user_configs)
+    redis_bitmap_agree_prefix = "post_agree"
+    redis_bitmap_bad_prefix = "post_bad"
 
     def retrieve(self, request, *args, **kwargs):
         instance = self.get_object()
@@ -30,3 +35,11 @@ class PostViewSet(custom_mixins.DataFetchListModelMixin,
     def list(self, request, *args, **kwargs):
         sync_pageviews(queryset=self.queryset)
         return super(PostViewSet, self).list(request, *args, **kwargs)
+
+    @action(methods=["POST"], detail=True, url_path="agree_posts")
+    def agree_post(self, request, pk):
+        return super(PostViewSet, self).agree(request, pk)
+
+    @action(methods=["POST"], detail=True, url_path="bad_posts")
+    def bad_post(self, request, pk):
+        return super(PostViewSet, self).bad(request, pk)

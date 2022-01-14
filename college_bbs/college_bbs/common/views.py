@@ -3,7 +3,7 @@ from rest_framework.response import Response
 from college_bbs.common.data_fetch import DataFetch
 from college_bbs.common.exception import RepeatAgreeError, AgreeNotFoundError
 from college_bbs.common.redis_conn import CONN
-from main.serializers.comment import AgreeCommentSerializers
+from main.serializers.comment import AgreeSerializers, BadSerializers
 
 
 class DataFetchListModelMixin:
@@ -38,16 +38,17 @@ class DataFetchRetrieveModelMixin:
         return Response(data)
 
 
-class AgreeCommentMixin:
+class AgreeMixin:
 
     # 使用action扩展资源的http方法
     @action(methods=["POST"], detail=True, url_path="agree")
-    def agree_comment(self, request, pk):
-        ser = AgreeCommentSerializers(data=request.data)
+    def agree(self, request, pk):
+        ser = AgreeSerializers(data=request.data)
         ser.is_valid(raise_exception=True)
         data = ser.validated_data
         obj = self.get_object()
-        redis_bit_key = obj.id
+        redis_bit_key = get_redis_bitmap_key(obj.id, self.redis_bitmap_agree_prefix)
+
         user_id = request.user.userprofile.id
         is_agree = CONN.getbit(redis_bit_key, user_id)
         res = {
@@ -55,18 +56,60 @@ class AgreeCommentMixin:
             "id": pk,
             "agree_count": 0,
         }
-        if data.get("agree_comment"):
+        if data.get("agree"):
             if is_agree == 1:
-                return Response(RepeatAgreeError("你已赞同过此答案")())
+                return Response(RepeatAgreeError("你已赞同过此条内容")())
             CONN.setbit(redis_bit_key, user_id, 1)
             res["message"] = "赞同成功"
 
-        elif not data.get("agree_comment"):
+        elif not data.get("agree"):
             if is_agree == 0:
-                return Response(AgreeNotFoundError("你还未赞同过此评论")())
+                return Response(AgreeNotFoundError("你还未赞同过此条内容")())
             CONN.setbit(redis_bit_key, user_id, 0)
             res["message"] = "已取消赞同"
 
         agree_count = CONN.bitcount(redis_bit_key)
         res["agree_count"] = agree_count
         return Response(res)
+
+
+class BadPostMixin:
+
+    def bad(self, request, pk):
+        ser = BadSerializers(data=request.data)
+        ser.is_valid(raise_exception=True)
+        data = ser.validated_data
+        obj = self.get_object()
+        redis_bit_key = get_redis_bitmap_key(obj.id, self.redis_bitmap_bad_prefix)
+
+        user_id = request.user.userprofile.id
+        is_bad = CONN.getbit(redis_bit_key, user_id)
+        res = {
+            "message": "",
+            "id": pk,
+        }
+        if data.get("bad"):
+            if is_bad == 1:
+                return Response(RepeatAgreeError("你已踩过此条内容")())
+            CONN.setbit(redis_bit_key, user_id, 1)
+            res["message"] = "踩成功"
+
+        elif not data.get("bad"):
+            if is_bad == 0:
+                return Response(AgreeNotFoundError("你还未踩过此条内容")())
+            CONN.setbit(redis_bit_key, user_id, 0)
+            res["message"] = "已踩"
+
+        return Response(res)
+
+
+class AgreeCommentMixin(AgreeMixin):
+    pass
+
+
+class AgreePostMixin(AgreeMixin):
+    pass
+
+
+def get_redis_bitmap_key(id: int, prefix: str):
+    return prefix + str(id)

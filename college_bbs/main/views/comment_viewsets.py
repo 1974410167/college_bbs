@@ -18,7 +18,8 @@ class CommentViewSet(custom_mixins.DataFetchListModelMixin,
     serializer_class = ParentCommentSerializers
     configs = {"post_id__topic_id": ["name"], "post_id": ["title", "topic_id"]}
     configs.update(user_configs)
+    redis_bitmap_agree_prefix = "parent_comment_agree"
 
     @action(methods=["POST"], detail=True, url_path="agree_parent_comment")
     def agree_comment(self, request, pk):
-        return super(CommentViewSet, self).agree_comment(request, pk)
+        return super(CommentViewSet, self).agree(request, pk)

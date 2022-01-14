@@ -1,23 +1,20 @@
-from college_bbs.common.serializers import BaseModelSerializer
+from college_bbs.common.serializers import BaseModelSerializer, AgreeBaseSerializer
 from main.models import ParentComment
 from rest_framework import serializers
-from user.authentication import _auth_ctx
-from college_bbs.common.redis_conn import CONN
 
 
-class ParentCommentSerializers(BaseModelSerializer):
-    is_agree = serializers.SerializerMethodField()
+class ParentCommentSerializers(AgreeBaseSerializer):
+
+    redis_bitmap_agree_prefix = "parent_comment_agree"
 
     class Meta(BaseModelSerializer.Meta):
         model = ParentComment
         fields = "__all__"
 
-    def get_is_agree(self, obj):
-        redis_bit_key = obj.id
-        user_id = _auth_ctx.user.userprofile.id
-        is_agree = CONN.getbit(redis_bit_key, user_id)
-        return is_agree
+
+class AgreeSerializers(serializers.Serializer):
+    agree = serializers.BooleanField(help_text="是否赞同， True赞同， False取消赞同")
 
 
-class AgreeCommentSerializers(serializers.Serializer):
-    agree_comment = serializers.BooleanField(help_text="是否赞同， True赞同， False取消赞同")
+class BadSerializers(serializers.Serializer):
+    bad = serializers.BooleanField(help_text="是否踩， True踩， False取消踩")

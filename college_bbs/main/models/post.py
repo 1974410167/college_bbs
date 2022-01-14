@@ -20,7 +20,7 @@ class Post(BaseModel):
     answer_count = models.BigIntegerField(verbose_name='回答数量', default=0)
     views_count = models.BigIntegerField(verbose_name='浏览量', default=0)
     topic_id = models.BigIntegerField(verbose_name="话题id", null=True)
-
+    agree_number = models.BigIntegerField(verbose_name="点赞量", default=0, null=True)
 
 
 

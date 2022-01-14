@@ -6,7 +6,7 @@ from main.models import ParentComment
 @bbs_task
 def sync_comment_agree_count():
     """
-    同步帖子浏览量
+    同步评论点赞量
     """
     comments = ParentComment.objects.all()
     objs = []

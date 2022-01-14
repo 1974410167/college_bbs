@@ -26,6 +26,7 @@ SECRET_KEY = 'django-insecure-nphr_uuxc$wtboq5ekm*rmh@k7i#dy$*4dikf+w0=_+(gmad+q
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
+
 ALLOWED_HOSTS = ["*", "0.0.0.0"]
 
 # Application definition
@@ -72,10 +73,15 @@ CELERYD_HIJACK_ROOT_LOGGER = True
 CELERY_RESULT_BACKEND = "redis://127.0.0.1:6379/7"
 CELERY_TIMEZONE = 'Asia/Shanghai'
 
+CORS_ALLOW_CREDENTIALS = True
+CORS_ORIGIN_ALLOW_ALL = True
+#允许所有的请求头
+CORS_ALLOW_HEADERS = ('*')
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
+    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
