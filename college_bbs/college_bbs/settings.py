@@ -97,6 +97,8 @@ REST_FRAMEWORK = {
         "user.authentication.ExpiringTokenAuthentication",
     ),
     "DEFAULT_PERMISSION_CLASSES": ("rest_framework.permissions.IsAuthenticated",),
+    'DEFAULT_FILTER_BACKENDS': ('django_filters.rest_framework.DjangoFilterBackend',)  # 全局默认配置过滤
+
 }
 
 # AUTH_USER_MODEL = "auth_user"

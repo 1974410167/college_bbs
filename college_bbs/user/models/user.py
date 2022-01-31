@@ -15,6 +15,7 @@ class UserProfile(BaseRegisterModel):
     email = models.CharField(verbose_name="邮箱", max_length=100, help_text="邮箱", null=True)
     phone = models.CharField(verbose_name="手机号", max_length=11, help_text="手机号", null=True)
     password = models.CharField(verbose_name="密码", max_length=255, help_text="密码", null=True)
+    circle_url = models.TextField(verbose_name="头像", null=True)
 
     def save(self, *args, **kwargs):
         self.password = make_password(password=self.password)

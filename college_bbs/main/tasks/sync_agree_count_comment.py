@@ -1,5 +1,6 @@
 from college_bbs.celery import bbs_task
 from college_bbs.common.redis_conn import CONN
+from college_bbs.common.views import get_redis_bitmap_key
 from main.models import ParentComment
 
 
@@ -11,7 +12,7 @@ def sync_comment_agree_count():
     comments = ParentComment.objects.all()
     objs = []
     for query in comments:
-        redis_bit_key = query.id
+        redis_bit_key = get_redis_bitmap_key(query.id, "parent_comment_agree")
         agree_count = CONN.bitcount(redis_bit_key)
         if query.like_count != agree_count:
             query.like_count = agree_count

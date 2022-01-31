@@ -30,4 +30,9 @@ app.conf.beat_schedule = {
         "task": "bbs.sync_comment_agree_count",
         "schedule": crontab(minute="*/1"),
     },
+    # 每分钟同步文章赞同数一次
+    "sync_post_agree_count": {
+        "task": "bbs.sync_post_agree_count",
+        "schedule": crontab(minute="*/1"),
+    },
 }

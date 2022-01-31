@@ -1,6 +1,8 @@
 from college_bbs.common.redis_conn import CONN
 import time
 
+from college_bbs.common.views import get_redis_bitmap_key
+
 
 def get_client_ip(request):
     x_forwarded_for = request.META.get('HTTP_X_FORWARDED_FOR')
@@ -60,3 +62,7 @@ def sync_pageviews(queryset):
         hyper_key = get_hyper_key(query)
         redis_views_count_pfcount = CONN.pfcount(hyper_key)
         query.views_count = redis_views_count_pfcount
+
+        redis_bit_key = get_redis_bitmap_key(query.id, "post_agree")
+        agree_count = CONN.bitcount(redis_bit_key)
+        query.agree_number = agree_count

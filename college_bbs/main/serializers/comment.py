@@ -1,5 +1,5 @@
 from college_bbs.common.serializers import BaseModelSerializer, AgreeBaseSerializer
-from main.models import ParentComment
+from main.models import ParentComment, ChildComment
 from rest_framework import serializers
 
 
@@ -18,3 +18,10 @@ class AgreeSerializers(serializers.Serializer):
 
 class BadSerializers(serializers.Serializer):
     bad = serializers.BooleanField(help_text="是否踩， True踩， False取消踩")
+
+
+class ChildCommentSerializers(BaseModelSerializer):
+
+    class Meta(BaseModelSerializer.Meta):
+        model = ChildComment
+        fields = "__all__"

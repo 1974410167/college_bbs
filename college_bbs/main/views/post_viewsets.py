@@ -7,6 +7,13 @@ from college_bbs.common import views as custom_mixins
 from college_bbs.common.tools import HandleViewsCount, sync_pageviews
 from main.models import Post
 from main.serializers.post import PostSerializers
+from django_filters import rest_framework as filters
+
+
+class PostsFilter(filters.FilterSet):
+    class Meta:
+        model = Post
+        fields = ['topic_id']
 
 
 class PostViewSet(custom_mixins.DataFetchListModelMixin,
@@ -22,6 +29,7 @@ class PostViewSet(custom_mixins.DataFetchListModelMixin,
     configs.update(user_configs)
     redis_bitmap_agree_prefix = "post_agree"
     redis_bitmap_bad_prefix = "post_bad"
+    filterset_class = PostsFilter
 
     def retrieve(self, request, *args, **kwargs):
         instance = self.get_object()
