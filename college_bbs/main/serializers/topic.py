@@ -1,3 +1,5 @@
+from rest_framework import serializers
+
 from college_bbs.common.serializers import BaseModelSerializer
 from main.models import Topic
 

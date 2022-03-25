@@ -15,7 +15,7 @@ class Post(BaseModel):
     class Meta(BaseModel.Meta):
         db_table = 'post'
 
-    title = models.CharField(verbose_name='问题标题', max_length=255)
+    title = models.CharField(verbose_name='问题标题', max_length=255, null=True)
     content = models.TextField(verbose_name='问题内容')
     answer_count = models.BigIntegerField(verbose_name='回答数量', default=0)
     views_count = models.BigIntegerField(verbose_name='浏览量', default=0)

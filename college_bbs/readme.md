@@ -4,6 +4,8 @@
 - celery -A college_bbs beat   # 发布任务
 - celery -A college_bbs worker --loglevel=info # 执行任务
 
+管理员账号：hyuan 
+密码：123456
 > 一个架构合理，代码优美，高性能的校园论坛系统
 
 

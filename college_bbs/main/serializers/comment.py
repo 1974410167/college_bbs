@@ -12,6 +12,12 @@ class ParentCommentSerializers(AgreeBaseSerializer):
         fields = "__all__"
 
 
+class CreateParentCommentSer(serializers.Serializer):
+
+    post_id = serializers.IntegerField(help_text="文章id")
+    content = serializers.CharField(help_text="内容", max_length=125)
+
+
 class AgreeSerializers(serializers.Serializer):
     agree = serializers.BooleanField(help_text="是否赞同， True赞同， False取消赞同")
 

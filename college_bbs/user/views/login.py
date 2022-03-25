@@ -23,7 +23,7 @@ class UserLogin(APIView):
         if token.is_expired():
             token.delete()
             token, _ = ApiToken.objects.get_or_create(user=user_objs.user)
-        token.set_max_age(days=30)
+        token.set_max_age(days=365)
         token.save()
         data = {
             'token': token.key,

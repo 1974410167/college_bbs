@@ -1,4 +1,6 @@
 from .sync_views_count_to_databases import sync_posts_views_count
 from .sync_agree_count_comment import sync_comment_agree_count
 from .sync_agree_count_posts import sync_post_agree_count
+from .sync_topic_host_number import sync_topic_number
+
 

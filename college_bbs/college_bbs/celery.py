@@ -35,4 +35,8 @@ app.conf.beat_schedule = {
         "task": "bbs.sync_post_agree_count",
         "schedule": crontab(minute="*/1"),
     },
+    "sync_topic_number": {
+        "task": "bbs.sync_topic_number",
+        "schedule": crontab(minute="*/1"),
+    },
 }
