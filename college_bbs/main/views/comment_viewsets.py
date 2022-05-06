@@ -50,7 +50,6 @@ class CommentViewSet(custom_mixins.DataFetchListModelMixin,
             instance = Post.objects.filter(id=post_id).first()
             if instance:
                 HandleViewsCount(instance, request).run()
-
         if page is not None:
             serializer = self.get_serializer(page, many=True)
             data = serializer.data
@@ -74,6 +73,7 @@ class ChildCommentsFilter(filters.FilterSet):
 
 
 class ChildCommentViewSet(custom_mixins.DataFetchListModelMixin,
+                          CreateModelMixin,
                           GenericViewSet):
 
     queryset = ChildComment.objects.all().order_by("-create_time")
@@ -82,3 +82,10 @@ class ChildCommentViewSet(custom_mixins.DataFetchListModelMixin,
     configs = {"comment_id__create_user_id": ["name"]}
     configs.update(user_configs)
     filterset_class = ChildCommentsFilter
+
+    def create(self, request, *args, **kwargs):
+        serializer = self.get_serializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        self.perform_create(serializer)
+        headers = self.get_success_headers(serializer.data)
+        return Response(serializer.data, status=status.HTTP_201_CREATED, headers=headers)

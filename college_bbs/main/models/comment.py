@@ -19,6 +19,8 @@ class ParentComment(BaseComment, BaseModel):
     """
     class Meta(BaseModel.Meta):
         db_table = 'parent_comment'
+        verbose_name = "父评论管理"
+        verbose_name_plural = "父评论管理"
 
     class ForeignKeyConstraint:
         fields = {
@@ -36,6 +38,8 @@ class ChildComment(BaseComment, BaseModel):
     """
     class Meta(BaseModel.Meta):
         db_table = 'child_comment'
+        verbose_name = "子评论管理"
+        verbose_name_plural = "子评论管理"
 
     class ForeignKeyConstraint:
         fields = {

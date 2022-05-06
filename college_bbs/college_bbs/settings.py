@@ -45,16 +45,34 @@ INSTALLED_APPS = [
     "django_filters",
 ]
 
-DATABASES = {
-    "default": {
-        'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'bbs',
-        'USER': "bloguser",
-        'PASSWORD': "12345678",
-        'HOST': "127.0.0.1",
-        'PORT': "3306",
+DATASTATUS = 1
+
+if DATASTATUS == 0:
+
+    DATABASES = {
+        "default": {
+            'ENGINE': 'django.db.backends.mysql',
+            'NAME': 'bbs',
+            'USER': "bloguser",
+            'PASSWORD': "12345678",
+            'HOST': "127.0.0.1",
+            'PORT': "3306",
+        }
     }
-}
+
+else:
+
+    DATABASES = {
+        "default": {
+            'ENGINE': 'django.db.backends.mysql',
+            'NAME': 'bbs',
+            'USER': "root",
+            'PASSWORD': "wsghy.5637",
+            'HOST': "gz-cynosdbmysql-grp-0ku3m9v9.sql.tencentcdb.com",
+            'PORT': "29978",
+        }
+    }
+
 
 CACHES = {
     "default": {

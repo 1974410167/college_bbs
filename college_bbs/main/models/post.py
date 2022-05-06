@@ -14,6 +14,8 @@ class Post(BaseModel):
 
     class Meta(BaseModel.Meta):
         db_table = 'post'
+        verbose_name = "帖子管理"
+        verbose_name_plural = "帖子管理"
 
     title = models.CharField(verbose_name='问题标题', max_length=255, null=True)
     content = models.TextField(verbose_name='问题内容')

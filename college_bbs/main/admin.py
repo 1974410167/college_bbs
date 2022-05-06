@@ -5,9 +5,9 @@ from .models import Topic, Post, ChildComment, ParentComment
 from django import forms
 
 
-admin.site.site_header = '西亚斯校园论坛'
+admin.site.site_header = '校园论坛后台系统'
 admin.site.site_title = "主要内容"
-admin.site.index_title = "论坛管理目录"
+admin.site.index_title = "校园论坛管理目录"
 
 
 class PostForm(forms.ModelForm):

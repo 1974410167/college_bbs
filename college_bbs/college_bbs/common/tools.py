@@ -63,12 +63,7 @@ def sync_pageviews(queryset):
     for query in queryset:
         hyper_key = get_hyper_key(query)
         redis_views_count_pfcount = CONN.pfcount(hyper_key)
-        if hyper_key == "健身title996_2997":
-            print(hyper_key)
-            print(redis_views_count_pfcount)
-
         query.views_count = redis_views_count_pfcount
-
         redis_bit_key = get_redis_bitmap_key(query.id, "post_agree")
         agree_count = CONN.bitcount(redis_bit_key)
         query.agree_number = agree_count

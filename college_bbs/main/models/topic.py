@@ -10,6 +10,8 @@ class Topic(BaseModel):
 
     class Meta(BaseModel.Meta):
         db_table = 'topic'
+        verbose_name = "话题管理"
+        verbose_name_plural = "话题管理"
 
     name = models.CharField(verbose_name="话题名字", max_length=255, null=True)
     description = models.TextField(verbose_name="话题描述", null=True)

@@ -9,6 +9,8 @@ class UserProfile(BaseRegisterModel):
 
     class Meta(BaseRegisterModel.Meta):
         db_table = 'user_userprofile'
+        verbose_name = "用户信息管理"
+        verbose_name_plural = "用户信息管理"
 
     user = models.OneToOneField(settings.AUTH_USER_MODEL, verbose_name="账号", on_delete=models.CASCADE)
     name = models.CharField(verbose_name="姓名", max_length=100, help_text="姓名", null=True)
