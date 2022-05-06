@@ -45,7 +45,7 @@ INSTALLED_APPS = [
     "django_filters",
 ]
 
-DATASTATUS = 1
+DATASTATUS = 0
 
 if DATASTATUS == 0:
 
@@ -67,9 +67,9 @@ else:
             'ENGINE': 'django.db.backends.mysql',
             'NAME': 'bbs',
             'USER': "root",
-            'PASSWORD': "wsghy.5637",
-            'HOST': "gz-cynosdbmysql-grp-0ku3m9v9.sql.tencentcdb.com",
-            'PORT': "29978",
+            'PASSWORD': "xxxx",
+            'HOST': "xxxx",
+            'PORT': "xxxx",
         }
     }
 
